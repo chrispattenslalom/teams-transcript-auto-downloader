@@ -2,6 +2,8 @@
 
 Chrome Manifest V3 extension that downloads meeting transcripts from SharePoint-hosted Teams recordings.
 
+![Extension in-page button example](ui-example.png)
+
 ## Features
 
 - Adds SharePoint recording URLs to a queue
