@@ -4,7 +4,7 @@ help:
 	@echo "Available targets:"
 	@echo "  make version               # bump patch version (x.y.z -> x.y.(z+1))"
 	@echo "  make version VERSION=1.2.3 # set explicit version"
-	@echo "  make dist                  # create distribution zip from extension/"
+	@echo "  make dist                  # create distribution zip in dist/"
 
 version:
 	@TARGET_VERSION="$(VERSION)" node -e ' \
@@ -50,7 +50,9 @@ if (unique.size !== 1) { \
 } \
 ' 
 	@VERSION="$$(node -p "require('./extension/manifest.json').version")"; \
-	OUT="teams-transcript-auto-downloader-v$$VERSION.zip"; \
+	OUT_DIR="dist"; \
+	OUT="$$OUT_DIR/teams-transcript-auto-downloader-v$$VERSION.zip"; \
+	mkdir -p "$$OUT_DIR"; \
 	rm -f "$$OUT"; \
 	cd extension && zip -rq "../$$OUT" . -x "*.DS_Store" -x "__MACOSX/*"; \
 	echo "Created $$OUT"

@@ -62,9 +62,46 @@ make dist
 
 Run `make dist` from the repo root. It creates:
 
-- `teams-transcript-auto-downloader-v<version>.zip`
+- `dist/teams-transcript-auto-downloader-v<version>.zip`
 
-The archive is built from `extension/` and contains `manifest.json` at the zip root, which is the required structure for store upload.
+The archive is built from `extension/` and contains `manifest.json` at the zip root.
+
+## Release Workflow (GitHub)
+
+1. Update version:
+
+```bash
+make version
+```
+
+2. Build release artifact:
+
+```bash
+make dist
+```
+
+3. Commit updated files plus the new `dist/*.zip`.
+4. Create/publish a GitHub Release and attach the zip from `dist/`.
+
+## User Install from GitHub Release Zip
+
+1. Download `dist/teams-transcript-auto-downloader-v<version>.zip` from the GitHub release assets.
+2. Unzip it to a local folder.
+3. Open `chrome://extensions`.
+4. Enable **Developer mode**.
+5. Click **Load unpacked**.
+6. Select the unzipped folder (the folder containing `manifest.json`).
+
+## User Updates When New Versions Are Published
+
+Chrome does not auto-update unpacked extensions from GitHub releases.
+
+Users update manually:
+
+1. Download and unzip the newer release zip.
+2. Open `chrome://extensions`.
+3. Click **Reload** on the extension card if the folder path is unchanged.
+4. If the folder path changed, use **Load unpacked** and select the new unzipped folder.
 
 ## Notes
 
