@@ -4,7 +4,7 @@ This file defines repo-specific guidance for coding agents working in this proje
 
 ## Scope
 
-Applies to the full repository rooted at `/Users/chris.patten/workspace/transcript_downloader`.
+Applies to the full repository rooted at `/Users/chris.patten/workspace/teams-transcript-auto-downloader`.
 
 ## Project Summary
 
@@ -15,20 +15,18 @@ Applies to the full repository rooted at `/Users/chris.patten/workspace/transcri
 
 ## Key Paths
 
-- `src/background/`: service worker orchestration, queueing, downloads, storage
-- `src/content/`: page integration and extraction bridge
-- `src/ui/`: options page UI and controls
-- `src/shared/`: shared constants and utility logic
-- `manifest.json`: development manifest
-- `extension/`: distribution-ready extension folder with mirrored source/manifest
+- `extension/src/background/`: service worker orchestration, queueing, downloads, storage
+- `extension/src/content/`: page integration and extraction bridge
+- `extension/src/ui/`: options page UI and controls
+- `extension/src/shared/`: shared constants and utility logic
+- `extension/manifest.json`: canonical extension manifest
 
 ## Required Workflow
 
-1. Make code changes in the main source tree and ensure behavior is correct.
-2. Keep distribution files in `extension/` aligned with corresponding root files.
-3. Run tests before finalizing:
+1. Make code changes in `extension/` and ensure behavior is correct.
+2. Run tests before finalizing:
    - `npm test`
-4. For release artifacts, package from `extension/` so `manifest.json` is at zip root.
+3. For release artifacts, package from `extension/` so `manifest.json` is at zip root.
 
 ## Change Guardrails
 
@@ -50,6 +48,6 @@ Applies to the full repository rooted at `/Users/chris.patten/workspace/transcri
 Use this sequence:
 
 ```bash
-cd /Users/chris.patten/workspace/transcript_downloader/extension
+cd /Users/chris.patten/workspace/teams-transcript-auto-downloader/extension
 zip -r ../teams-transcript-auto-downloader-v<version>.zip . -x "*.DS_Store" -x "__MACOSX/*"
 ```

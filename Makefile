@@ -9,7 +9,7 @@ help:
 version:
 	@TARGET_VERSION="$(VERSION)" node -e ' \
 const fs = require("fs"); \
-const files = ["manifest.json", "extension/manifest.json", "package.json"]; \
+const files = ["extension/manifest.json", "package.json"]; \
 const semver = new RegExp("^[0-9]+\\.[0-9]+\\.[0-9]+$$"); \
 const current = JSON.parse(fs.readFileSync("extension/manifest.json", "utf8")).version; \
 const explicit = (process.env.TARGET_VERSION || "").trim(); \
@@ -39,7 +39,7 @@ console.log("Updated version: " + current + " -> " + next); \
 dist:
 	@node -e ' \
 const fs = require("fs"); \
-const files = ["manifest.json", "extension/manifest.json", "package.json"]; \
+const files = ["extension/manifest.json", "package.json"]; \
 const versions = files.map((f) => ({ file: f, version: JSON.parse(fs.readFileSync(f, "utf8")).version })); \
 const unique = new Set(versions.map((v) => v.version)); \
 if (unique.size !== 1) { \

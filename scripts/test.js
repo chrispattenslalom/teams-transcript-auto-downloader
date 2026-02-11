@@ -4,9 +4,9 @@ function assert(condition, message) {
   }
 }
 
-import { buildTranscriptFilename, sanitizeFilename } from "../src/shared/filename.js";
-import { formatOffset, formatTranscriptText } from "../src/shared/transcript.js";
-import { createStableId, normalizeSharePointUrl } from "../src/shared/url.js";
+import { buildTranscriptFilename, sanitizeFilename } from "../extension/src/shared/filename.js";
+import { formatOffset, formatTranscriptText } from "../extension/src/shared/transcript.js";
+import { createStableId, normalizeSharePointUrl } from "../extension/src/shared/url.js";
 
 assert(sanitizeFilename('a/b:c*"d?e<f>g|') === "abcdefg", "sanitizeFilename strips invalid chars");
 

@@ -12,10 +12,10 @@ Chrome Manifest V3 extension that downloads meeting transcripts from SharePoint-
 
 ## Project Structure
 
-- `src/`: main extension source (background, content, UI, shared utils)
-- `manifest.json`: root manifest for local development
+- `extension/src/`: main extension source (background, content, UI, shared utils)
+- `extension/manifest.json`: canonical extension manifest
 - `scripts/test.js`: lightweight Node test script for core utilities
-- `extension/`: packaged extension directory for distribution (`manifest.json` at folder root)
+- `extension/`: source and distribution directory (`manifest.json` at folder root)
 
 ## Requirements
 
@@ -41,7 +41,7 @@ npm test
 Use the `Makefile` targets for consistent versioning and packaging:
 
 ```bash
-# bump patch version across manifest.json, extension/manifest.json, package.json
+# bump patch version across extension/manifest.json and package.json
 make version
 
 # or set a specific version
@@ -105,5 +105,5 @@ Users update manually:
 
 ## Notes
 
-- `make version` keeps `manifest.json`, `extension/manifest.json`, and `package.json` in sync.
+- `make version` keeps `extension/manifest.json` and `package.json` in sync.
 - The extension currently targets SharePoint-hosted recordings (`https://*.sharepoint.com/*`).
