@@ -32,6 +32,7 @@ assert(formatOffset("00:01:02.123") === "00:01:02", "formatOffset hh:mm:ss strin
 
 const text = formatTranscriptText({
   meetingTitle: "Weekly Sync",
+  scheduledStart: "20260211_093510",
   entries: [
     { speakerDisplayName: "Chris", startOffset: "00:00:05.000", text: "Hello" },
     { speakerDisplayName: "Sam", startOffset: 7, text: "World" }
@@ -39,6 +40,7 @@ const text = formatTranscriptText({
 });
 
 assert(text.includes("Weekly Sync"), "formatted text includes title");
+assert(text.includes("2026-02-11 09:35:10"), "formatted text includes date/time under title");
 assert(text.includes("Chris"), "formatted text includes speaker");
 assert(text.includes("00:00:07"), "formatted text includes formatted offset");
 assert(
