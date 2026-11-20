@@ -29,7 +29,7 @@ async function recordDownload(response, sourceUrl) {
   } catch {
     // keep source URL as fallback key input
   }
-  const key = createStableId(normalized);
+  const key = createStableId(response.sourceId ? `${normalized}#${response.sourceId}` : normalized);
 
   if (result.ok) {
     const entry = {
@@ -99,10 +99,32 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         return;
       }
 
-      const response = await chrome.tabs.sendMessage(tabId, { type: MESSAGE_TYPES.START_EXTRACT, url: tabUrl });
+      const frameId = sender.frameId ?? 0;
+      const response = await chrome.tabs.sendMessage(
+        tabId,
+        { type: MESSAGE_TYPES.START_EXTRACT, url: tabUrl },
+        { frameId }
+      );
       if (response?.type !== MESSAGE_TYPES.TRANSCRIPT_FOUND) {
-        sendResponse({ ok: false, reason: response?.reason || "No transcript" });
+        sendResponse({ ok: false, reason: response?.detail || response?.reason || "No transcript" });
         return;
+      }
+
+      if (frameId !== 0) {
+        const pageUrl = new URL(tabUrl);
+        if (pageUrl.origin === "https://teams.microsoft.com" && pageUrl.pathname.startsWith("/v2/")) {
+          try {
+            const meeting = await chrome.tabs.sendMessage(
+              tabId,
+              { type: MESSAGE_TYPES.GET_TEAMS_MEETING_INFO },
+              { frameId: 0 }
+            );
+            if (meeting?.meetingTitle) response.meetingTitle = meeting.meetingTitle;
+            else console.warn("Teams meeting title was not found");
+          } catch (err) {
+            console.warn("Could not read Teams meeting title", err);
+          }
+        }
       }
 
       const saved = await recordDownload(response, tabUrl);

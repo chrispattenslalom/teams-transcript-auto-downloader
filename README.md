@@ -1,6 +1,6 @@
 # Teams Transcript Auto-Downloader
 
-Chrome Manifest V3 extension that downloads meeting transcripts from SharePoint-hosted Teams recordings.
+Chrome Manifest V3 extension that downloads meeting transcripts from SharePoint-hosted Teams recordings and Teams meeting recaps.
 
 ![Extension in-page button example](ui-example.png)
 
@@ -11,6 +11,7 @@ Chrome Manifest V3 extension that downloads meeting transcripts from SharePoint-
 - Downloads transcript text files via authenticated browser session
 - Tracks history to prevent duplicate downloads (unless explicitly allowed)
 - Supports manual "download from current page" via extension action
+- Adds a **Download .txt transcript** button to the transcript tab of Teams web meeting recaps
 
 ## Project Structure
 
@@ -108,4 +109,7 @@ Users update manually:
 ## Notes
 
 - `make version` keeps `extension/manifest.json` and `package.json` in sync.
-- The extension currently targets SharePoint-hosted recordings (`https://*.sharepoint.com/*`).
+- For Teams, open the meeting recap at `https://teams.microsoft.com/v2/` and select **Transcript**. The button appears inside the transcript panel after it loads. Reload the extension and refresh Teams after installing or updating it.
+- Teams transcripts must be accessible to the signed-in user. The extension requests the full transcript using the existing SharePoint session; if that request fails, it scrolls through the transcript and saves it only when it can verify that all entries were collected. Keep the tab open during collection.
+- Transcript content is not saved in extension storage. When a Teams meeting date is unavailable, the filename and text header use the download date.
+- The queue continues to accept SharePoint recording URLs only.
