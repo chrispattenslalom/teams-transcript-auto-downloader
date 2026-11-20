@@ -48,7 +48,7 @@ Use the `Makefile` targets for consistent versioning and packaging:
 make version
 
 # or set a specific version
-make version VERSION=0.1.1
+make version VERSION=0.2.0
 
 # build distribution zip (fails if versions are out of sync)
 make dist
