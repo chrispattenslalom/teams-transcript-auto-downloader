@@ -44,11 +44,21 @@ export async function downloadTranscript(payload) {
     entries
   });
 
-  const dataUrl = toDataUrl(transcriptText);
-
   try {
+    if (!chrome.downloads?.download || !chrome.downloads?.onChanged) {
+      const response = await chrome.runtime.sendNativeMessage("application.id", {
+        type: "SAVE_TRANSCRIPT",
+        filename,
+        text: transcriptText
+      });
+      if (!response?.ok || typeof response.filename !== "string" || !response.filename) {
+        throw new Error(response?.error || "Native transcript download failed");
+      }
+      return { ok: true, filename: response.filename };
+    }
+
     const id = await chrome.downloads.download({
-      url: dataUrl,
+      url: toDataUrl(transcriptText),
       filename,
       conflictAction: "uniquify",
       saveAs: false

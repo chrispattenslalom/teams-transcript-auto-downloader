@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "test:safari": "node scripts/safari.js test",
+    "build:safari": "node scripts/safari.js build"
   }
 }
