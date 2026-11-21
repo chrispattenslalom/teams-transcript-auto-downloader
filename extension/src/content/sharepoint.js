@@ -87,7 +87,7 @@
     flex.className = "ms-Button-flexContainer flexContainer-74";
 
     const icon = document.createElement("i");
-    icon.setAttribute("data-icon-name", "Download");
+    icon.dataset.iconName = "Download";
     icon.setAttribute("aria-hidden", "true");
     icon.className = "ms-Icon root-32 css-81 ms-Button-icon icon-343";
     icon.style.fontFamily = "FabricMDL2Icons";
@@ -122,10 +122,10 @@
       if (!nativeButton) return;
 
       const nativeItem = nativeButton.closest(".ms-OverflowSet-item");
-      if (!nativeItem || !nativeItem.parentElement) return;
+      if (!nativeItem?.parentElement) return;
 
       const customItem = createCustomToolbarButton();
-      nativeItem.insertAdjacentElement("afterend", customItem);
+      nativeItem.after(customItem);
     };
 
     inject();
