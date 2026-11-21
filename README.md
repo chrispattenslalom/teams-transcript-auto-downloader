@@ -118,7 +118,7 @@ npm run test:safari
 npm run build:safari
 ```
 
-The build creates `dist/teams-transcript-auto-downloader-safari-v<version>-test.zip`. This is a locally signed test build, not a notarized or App Store release; the build will not overwrite an existing archive with that name.
+The build creates `dist/teams-transcript-auto-downloader-safari-v<version>.zip`. This is a locally signed test build, not a notarized or App Store release; the build will not overwrite an existing archive with that name.
 
 The archive contains a macOS app, not an unpacked extension. Do **not** select the archive or app under Safari's **Add Temporary Extension**: that option expects an extension manifest at the root and does not support the native messaging used to save downloads.
 

@@ -46,8 +46,8 @@ try {
       throw new Error("Extension and package versions must match and use x.y.z format");
     }
 
-    const output = path.join(root, "dist", `teams-transcript-auto-downloader-safari-v${manifest.version}-test.zip`);
-    if (existsSync(output)) throw new Error(`Test archive already exists: ${output}`);
+    const output = path.join(root, "dist", `teams-transcript-auto-downloader-safari-v${manifest.version}.zip`);
+    if (existsSync(output)) throw new Error(`Safari archive already exists: ${output}`);
 
     const resources = path.join(work, "resources");
     cpSync(extension, resources, {
