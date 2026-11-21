@@ -50,4 +50,8 @@ assert(
 );
 assert(createStableId("abc") === createStableId("abc"), "createStableId is deterministic");
 
+await import("./test-teams-recap.js");
+await import("./test-safari-downloads.js");
+await import("./test-safari-host.js");
+
 console.log("All tests passed");

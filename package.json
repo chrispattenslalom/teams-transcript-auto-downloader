@@ -1,9 +1,11 @@
 {
   "name": "transcript_downloader",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "test:safari": "node scripts/safari.js test",
+    "build:safari": "node scripts/safari.js build"
   }
 }

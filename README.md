@@ -1,16 +1,17 @@
 # Teams Transcript Auto-Downloader
 
-Chrome Manifest V3 extension that downloads meeting transcripts from SharePoint-hosted Teams recordings.
+Browser extension for Chrome and Safari on macOS that downloads meeting transcripts from SharePoint-hosted Teams recordings and Teams meeting recaps.
 
 ![Extension in-page button example](ui-example.png)
 
 ## Features
 
 - Adds SharePoint recording URLs to a queue
-- Processes queue items in a background service worker
+- Processes queue items in the background
 - Downloads transcript text files via authenticated browser session
 - Tracks history to prevent duplicate downloads (unless explicitly allowed)
 - Supports manual "download from current page" via extension action
+- Adds a **Download .txt transcript** button to the transcript tab of Teams web meeting recaps
 
 ## Project Structure
 
@@ -22,7 +23,7 @@ Chrome Manifest V3 extension that downloads meeting transcripts from SharePoint-
 ## Requirements
 
 - Node.js 18+ (or compatible modern Node runtime)
-- Google Chrome (or Chromium-based browser with MV3 support)
+- Google Chrome (or a Chromium-based browser with MV3 support), or Safari 16.4 or later on macOS 12 or later
 
 ## Install Dependencies
 
@@ -52,6 +53,8 @@ make version VERSION=0.2.0
 # build distribution zip (fails if versions are out of sync)
 make dist
 ```
+
+For a versioned branch, set `VERSION` to the branch version before packaging. The archive name uses the manifest version; renaming an archive does not update its contents.
 
 ## Load Extension Locally
 
@@ -105,7 +108,54 @@ Users update manually:
 3. Click **Reload** on the extension card if the folder path is unchanged.
 4. If the folder path changed, use **Load unpacked** and select the new unzipped folder.
 
+## Safari on macOS
+
+The Safari test build requires macOS 12 or later and Safari 16.4 or later. Building it also requires Xcode. From the repository root, run:
+
+```bash
+npm test
+npm run test:safari
+npm run build:safari
+```
+
+The build creates `dist/teams-transcript-auto-downloader-safari-v<version>.zip`. This is a locally signed test build, not a notarized or App Store release; the build will not overwrite an existing archive with that name.
+
+The archive contains a macOS app, not an unpacked extension. Do **not** select the archive or app under Safari's **Add Temporary Extension**: that option expects an extension manifest at the root and does not support the native messaging used to save downloads.
+
+1. Unzip the archive.
+2. In Safari settings, enable **Show features for web developers** under **Advanced**.
+
+   ![Safari Advanced settings with Show features for web developers enabled](docs/images/safari-developer-features.png)
+
+3. In Safari settings under **Developer**, enable **Allow unsigned extensions**. In Safari 16, use **Develop > Allow Unsigned Extensions** instead.
+
+   ![Safari Developer settings with Allow unsigned extensions enabled](docs/images/safari-unsigned-extensions.png)
+
+4. Open the included `TeamsTranscriptDownloader.app`.
+5. In Safari settings under **Extensions**, enable Teams Transcript Auto-Downloader and allow it access to Teams and the relevant SharePoint site.
+
+   ![Safari Extensions settings with Teams Transcript Auto-Downloader enabled; site and profile details are hidden](docs/images/safari-extension-enabled.png)
+
+   The screenshot shows an earlier app version; the settings are the same.
+
+6. Refresh Teams and open the meeting recap's **Transcript** tab.
+
+Disable the unsigned-extension setting after testing; Safari also requires it to be enabled again after Safari quits. Downloads are saved directly to the macOS Downloads folder by the sandboxed app extension, rather than appearing in Safari's download manager. The app needs permission to write to that folder.
+
+On a SharePoint recording, use the **Download .txt transcript** button in the transcript panel:
+
+![SharePoint transcript panel in Safari with the extension's download button highlighted](docs/images/safari-sharepoint-download.png)
+
+### Uninstall from Safari
+
+1. Open `TeamsTranscriptDownloader.app` and click **Uninstall Extension in Safari**.
+2. In Safari's Extensions settings, select Teams Transcript Auto-Downloader and click **Uninstall**.
+3. If prompted, move the containing app to the Trash. Downloaded transcripts are not removed.
+
 ## Notes
 
 - `make version` keeps `extension/manifest.json` and `package.json` in sync.
-- The extension currently targets SharePoint-hosted recordings (`https://*.sharepoint.com/*`).
+- For Teams, open the meeting recap at `https://teams.microsoft.com/v2/` and select **Transcript**. The button appears inside the transcript panel after it loads. Reload the extension and refresh Teams after installing or updating it.
+- Teams transcripts must be accessible to the signed-in user. The extension requests the full transcript using the existing SharePoint session; if that request fails, it scrolls through the transcript and saves it only when it can verify that all entries were collected. Keep the tab open during collection.
+- Transcript content is not saved in extension storage. When a Teams meeting date is unavailable, the filename and text header use the download date.
+- The queue continues to accept SharePoint recording URLs only.
