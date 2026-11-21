@@ -146,6 +146,12 @@ On a SharePoint recording, use the **Download .txt transcript** button in the tr
 
 ![SharePoint transcript panel in Safari with the extension's download button highlighted](docs/images/safari-sharepoint-download.png)
 
+### Uninstall from Safari
+
+1. Open `TeamsTranscriptDownloader.app` and click **Uninstall Extension in Safari**.
+2. In Safari's Extensions settings, select Teams Transcript Auto-Downloader and click **Uninstall**.
+3. If prompted, move the containing app to the Trash. Downloaded transcripts are not removed.
+
 ## Notes
 
 - `make version` keeps `extension/manifest.json` and `package.json` in sync.

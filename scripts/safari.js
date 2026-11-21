@@ -15,6 +15,7 @@ import {
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { addUninstallControls } from "../safari/host-ui.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const handler = path.join(root, "safari/SafariWebExtensionHandler.swift");
@@ -79,6 +80,7 @@ try {
     ]);
     const project = path.join(projectLocation, name);
     copyFileSync(handler, path.join(project, `${name} Extension`, "SafariWebExtensionHandler.swift"));
+    addUninstallControls(project);
     const derivedData = path.join(work, "derived");
     run("xcodebuild", [
       "-quiet", "-project", path.join(project, `${name}.xcodeproj`), "-scheme", name,
