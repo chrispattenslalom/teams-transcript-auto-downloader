@@ -124,12 +124,27 @@ The archive contains a macOS app, not an unpacked extension. Do **not** select t
 
 1. Unzip the archive.
 2. In Safari settings, enable **Show features for web developers** under **Advanced**.
+
+   ![Safari Advanced settings with Show features for web developers enabled](docs/images/safari-developer-features.png)
+
 3. In Safari settings under **Developer**, enable **Allow unsigned extensions**. In Safari 16, use **Develop > Allow Unsigned Extensions** instead.
+
+   ![Safari Developer settings with Allow unsigned extensions enabled](docs/images/safari-unsigned-extensions.png)
+
 4. Open the included `TeamsTranscriptDownloader.app`.
 5. In Safari settings under **Extensions**, enable Teams Transcript Auto-Downloader and allow it access to Teams and the relevant SharePoint site.
+
+   ![Safari Extensions settings with Teams Transcript Auto-Downloader enabled; site and profile details are hidden](docs/images/safari-extension-enabled.png)
+
+   The screenshot shows an earlier app version; the settings are the same.
+
 6. Refresh Teams and open the meeting recap's **Transcript** tab.
 
 Disable the unsigned-extension setting after testing; Safari also requires it to be enabled again after Safari quits. Downloads are saved directly to the macOS Downloads folder by the sandboxed app extension, rather than appearing in Safari's download manager. The app needs permission to write to that folder.
+
+On a SharePoint recording, use the **Download .txt transcript** button in the transcript panel:
+
+![SharePoint transcript panel in Safari with the extension's download button highlighted](docs/images/safari-sharepoint-download.png)
 
 ## Notes
 
